@@ -33,19 +33,7 @@ class App extends React.Component{
     this.setState({newTodo: e.target.value})
   }
 
-  // generateId = () => {
-  //   console.log(this.state.todos.length)
-  //   const lastTodo = this.state.todos[this.state.todos.length-1];
-  //   if(lastTodo){
-  //     return lastTodo.id + 1
-  //   }
-  //   else{
-  //     return 1;
-  //   }
-  // }
-
   handleClick = () => {
-
     Axios.post(`${this.apiurl}/todos`, {
       name: this.state.newTodo
     }).then(
@@ -57,20 +45,13 @@ class App extends React.Component{
     )
     this.setState({newTodo: "", loading:true})
     this.alert("todo list successfully added");
-    console.log("after click add button number of todos is : ",this.state.todos.length)
-    console.log("todos is : ",this.state.todos)
-
   }
 
   deleteTodo = (index) => {
     const todos = this.state.todos;
     const todo = todos[index]
 
-    Axios.delete(`${this.apiurl}/todos/${todo.id}`).then(
-      (Response)=> {
-        console.log(Response)
-      }
-    )
+    Axios.delete(`${this.apiurl}/todos/${todo.id}`)
 
     delete todos[index]
 
@@ -82,26 +63,21 @@ class App extends React.Component{
   editTodo = (index) =>{
     const todo = this.state.todos[index]
     this.setState({newTodo: todo.name, editing:true, editingIndex: index})
-    console.log(todo)
   }
 
   updateTodo = () => {
-    console.log(this.state.editingIndex)
     const todo = this.state.todos[this.state.editingIndex];
 
     Axios.put(`${this.apiurl}/todos/${todo.id}`, {
       name: this.state.newTodo
     }).then(
       (Response)=> {
-        console.log(Response);
         const todos = this.state.todos
         todos[this.state.editingIndex] = Response.data
         this.setState({todos, editing: false, newTodo: ""})
-
         this.alert("todo list successfully updated");
       }
     )
-
   }
 
   alert = (notification) => {
@@ -144,10 +120,8 @@ class App extends React.Component{
               ))}
           </div>
         )}
-        
       </div>
       </div>
-      
     )
   }
 }
