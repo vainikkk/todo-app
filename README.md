@@ -6,6 +6,6 @@ use of :
   mockAPI,
   
   
- Creating todolist app we can add todo item and also we can do it editing and deleting todo item
+ Creating todolist app user can add todo item and user also can do it editing and deleting todo item
  
  
